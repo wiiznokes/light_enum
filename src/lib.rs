@@ -21,14 +21,14 @@ pub fn generate_light_enum(input: TokenStream) -> TokenStream {
 
     let generated_code = quote! {
         #[derive(Debug, PartialEq, Eq, Clone)]
-        enum #new_enum_name {
+        pub enum #new_enum_name {
             #(
                 #light_variants,
             )*
         }
 
         impl #orig_enum_name {
-            fn to_light(&self) -> #new_enum_name {
+            pub fn to_light(&self) -> #new_enum_name {
                 match self {
                     #(
                         #orig_enum_name::#light_variants_cloned(_) => #new_enum_name::#light_variants_cloned,

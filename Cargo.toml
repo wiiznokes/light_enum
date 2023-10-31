@@ -1,0 +1,24 @@
+[package]
+name = "light_enum"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0 OR MIT"
+repository = "https://github.com/wiiznokes/light_enum"
+keywords = ["enum", "macros", "derive", "light", "simple"]
+categories = ["rust-patterns"]
+exclude = ["/.*", "/Makefile"]
+description = """
+provide a derive keyword to generate a light enum
+"""
+
+
+[lib]
+proc-macro = true
+
+[[bin]]
+name = "test"
+path = "src/main.rs"
+
+[dependencies]
+syn = "2.0.38"
+quote = "1.0.33"

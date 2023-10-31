@@ -13,6 +13,7 @@ pub fn generate_light_enum(input: TokenStream) -> TokenStream {
     };
 
     let orig_enum_name = &input.ident;
+    let orig_visibility = &input.vis;
 
     let new_enum_name = syn::Ident::new(&format!("{}Light", orig_enum_name), orig_enum_name.span());
 
@@ -21,14 +22,14 @@ pub fn generate_light_enum(input: TokenStream) -> TokenStream {
 
     let generated_code = quote! {
         #[derive(Debug, PartialEq, Eq, Clone)]
-        pub enum #new_enum_name {
+        #orig_visibility enum #new_enum_name {
             #(
                 #light_variants,
             )*
         }
 
         impl #orig_enum_name {
-            pub fn to_light(&self) -> #new_enum_name {
+            #orig_visibility fn to_light(&self) -> #new_enum_name {
                 match self {
                     #(
                         #orig_enum_name::#light_variants_cloned(_) => #new_enum_name::#light_variants_cloned,

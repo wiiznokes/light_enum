@@ -46,7 +46,7 @@ enum MyEnumLight {
 }
 ```
 
-# Values
+## Values
 
 ```rust
 use light_enum::Values;

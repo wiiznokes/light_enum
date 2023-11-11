@@ -2,11 +2,11 @@
 name = "light_enum"
 version = "0.1.0"
 edition = "2021"
-license = "Apache-2.0 OR MIT"
+license = "MIT"
 repository = "https://github.com/wiiznokes/light_enum"
-keywords = ["enum", "macros", "derive", "light", "simple"]
+keywords = ["enum", "macros", "derive", "light", "simple", "values"]
 categories = ["rust-patterns"]
-exclude = ["/.*", "/Makefile"]
+exclude = ["/.*", "/Makefile", "LICENCE"]
 description = """
 provide a derive keyword to generate a light enum
 """
@@ -15,10 +15,15 @@ provide a derive keyword to generate a light enum
 [lib]
 proc-macro = true
 
-[[bin]]
-name = "test"
-path = "src/main.rs"
+
+[[test]]
+name = "light_enum"
+path = "src/light_enum_test.rs"
+
+[[test]]
+name = "values"
+path = "src/values_test.rs"
 
 [dependencies]
-syn = "2.0.38"
-quote = "1.0.33"
+syn = "2.0"
+quote = "1.0"

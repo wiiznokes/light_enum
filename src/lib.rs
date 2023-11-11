@@ -21,7 +21,9 @@ pub fn generate_light_enum(input: TokenStream) -> TokenStream {
     let light_variants_cloned = light_variants.clone();
 
     let generated_code = quote! {
-        #[derive(Debug, PartialEq, Eq, Clone)]
+        use light_enum::Values;
+
+        #[derive(Debug, PartialEq, Eq, Clone, Values)]
         #orig_visibility enum #new_enum_name {
             #(
                 #light_variants,
@@ -36,6 +38,37 @@ pub fn generate_light_enum(input: TokenStream) -> TokenStream {
                     )*
                 }
             }
+        }
+    };
+
+    generated_code.into()
+}
+
+#[proc_macro_derive(Values)]
+pub fn generate_values(input: TokenStream) -> TokenStream {
+    let input = parse_macro_input!(input as DeriveInput);
+
+    let Data::Enum(data_enum) = &input.data else {
+        panic!("Values can only be derived for enums");
+    };
+
+    let orig_enum_name = &input.ident;
+    let orig_visibility = &input.vis;
+
+    let variants = data_enum.variants.iter().map(|variant| &variant.ident);
+
+    let variants_count = variants.clone().count();
+
+    let generated_code = quote! {
+
+        impl #orig_enum_name {
+
+            #orig_visibility const VALUES: [#orig_enum_name; #variants_count] = [
+                #(
+                     #orig_enum_name::#variants,
+                )*
+            ];
+
         }
     };
 

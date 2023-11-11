@@ -1,13 +1,14 @@
+test:
+	clear && cargo test --all --all-features
 
+expand-light-enum:
+	clear && cargo expand --test light_enum
 
-expand:
-	clear && cargo expand --bin test
+expand-values:
+	clear && cargo expand --test values
 
-release:
-	clear && cargo run --release
-
-run:
-	clear && cargo run
+build:
+	clear && cargo build --release
 
 fix:
 	cargo clippy --all --fix --allow-dirty --allow-staged

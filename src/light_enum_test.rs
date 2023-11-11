@@ -9,7 +9,8 @@ enum MyEnum {
     C(i32),
 }
 
-pub fn main() {
+#[test]
+fn light_enum() {
     let heavy = MyEnum::A(0);
     let light = heavy.to_light();
 

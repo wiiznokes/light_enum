@@ -4,6 +4,7 @@
 [![crates.io](https://img.shields.io/crates/v/light_enum?style=flat-square&logo=rust)](https://crates.io/crates/light_enum)
 [![docs.rs](https://img.shields.io/badge/docs.rs-light_enum-blue?style=flat-square&logo=docs.rs)](https://docs.rs/light_enum)
 [![license](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](#license)
+![ci_status](https://github.com/wiiznokes/light_enum/actions/workflows/test.yml/badge.svg)
 
 A crate providing a derive keyword to generate a light enum.
 

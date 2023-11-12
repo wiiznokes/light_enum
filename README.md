@@ -27,12 +27,12 @@ use light_enum::LightEnum;
 
 #[derive(LightEnum)]
 enum MyEnum {
-    A(i32),
+    A(i32, i32),
     B(i32),
-    C(i32),
+    C,
 }
 
-let heavy = MyEnum::A(0);
+let heavy = MyEnum::A(0, 0);
 let light = heavy.to_light();
 assert!(light == MyEnumLight::A);
 ```
@@ -76,16 +76,6 @@ impl Vals {
 
 ## Limitations
 
-#### LightEnum
-Having a field with no content will cause an error.
-
-```rust
-// this code will not compile
-#[derive(LightEnum)]
-enum MyEnum {
-    A,
-}
-```
 #### Values
 Having a field with content will cause an error.
 

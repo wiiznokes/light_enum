@@ -13,29 +13,35 @@ pub fn generate_light_enum(input: TokenStream) -> TokenStream {
     };
 
     let orig_enum_name = &input.ident;
-    let orig_visibility = &input.vis;
+    let visibility = &input.vis;
 
     let new_enum_name = syn::Ident::new(&format!("{}Light", orig_enum_name), orig_enum_name.span());
 
-    let light_variants = data_enum.variants.iter().map(|variant| &variant.ident);
-    let light_variants_cloned = light_variants.clone();
+    let light_fields = data_enum.variants.iter().map(|variant| &variant.ident);
+
+    let to_light_match_lines = data_enum.variants.iter().map(|variant| {
+        let field = &variant.ident;
+        if variant.fields.is_empty() {
+            quote! { #orig_enum_name::#field => #new_enum_name::#field }
+        } else {
+            quote! { #orig_enum_name::#field(..) => #new_enum_name::#field }
+        }
+    });
 
     let generated_code = quote! {
         use light_enum::Values;
 
         #[derive(Debug, PartialEq, Eq, Clone, Values)]
-        #orig_visibility enum #new_enum_name {
+        #visibility enum #new_enum_name {
             #(
-                #light_variants,
-            )*
+                #light_fields
+            ),*
         }
 
         impl #orig_enum_name {
-            #orig_visibility fn to_light(&self) -> #new_enum_name {
+            #visibility fn to_light(&self) -> #new_enum_name {
                 match self {
-                    #(
-                        #orig_enum_name::#light_variants_cloned(_) => #new_enum_name::#light_variants_cloned,
-                    )*
+                    #(#to_light_match_lines),*
                 }
             }
         }
@@ -52,21 +58,21 @@ pub fn generate_values(input: TokenStream) -> TokenStream {
         panic!("Values can only be derived for enums");
     };
 
-    let orig_enum_name = &input.ident;
-    let orig_visibility = &input.vis;
+    let enum_name = &input.ident;
+    let visibility = &input.vis;
 
-    let variants = data_enum.variants.iter().map(|variant| &variant.ident);
+    let fields = data_enum.variants.iter().map(|variant| &variant.ident);
 
-    let variants_count = variants.clone().count();
+    let fields_count = fields.clone().count();
 
     let generated_code = quote! {
 
-        impl #orig_enum_name {
+        impl #enum_name {
 
-            #orig_visibility const VALUES: [#orig_enum_name; #variants_count] = [
+            #visibility const VALUES: [#enum_name; #fields_count] = [
                 #(
-                     #orig_enum_name::#variants,
-                )*
+                     #enum_name::#fields
+                ),*
             ];
 
         }

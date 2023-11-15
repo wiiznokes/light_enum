@@ -1,11 +1,9 @@
 test:
 	clear && cargo test --all --all-features
 
-expand-light-enum:
-	clear && cargo expand --test light_enum
+expand:
+	clear && cargo expand --bin main
 
-expand-values:
-	clear && cargo expand --test values
 
 build:
 	clear && cargo build --release

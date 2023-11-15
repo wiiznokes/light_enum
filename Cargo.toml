@@ -3,6 +3,7 @@ name = "light_enum"
 version = "0.2.1"
 edition = "2021"
 license = "MIT"
+authors = ["wiiznokes <wiiznokes2@gmail.com>"]
 repository = "https://github.com/wiiznokes/light_enum"
 keywords = ["enum", "macros", "derive", "light", "values"]
 categories = ["rust-patterns"]
@@ -11,6 +12,9 @@ description = """
 provide a derive keyword to generate a light enum
 """
 
+[[bin]]
+name = "main"
+path = "src/main.rs"
 
 [lib]
 proc-macro = true

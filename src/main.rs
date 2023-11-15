@@ -9,10 +9,7 @@ enum MyEnum {
     C,
 }
 
-
-
 fn main() {
-
     let heavy = MyEnum::A(0, 0);
     let light = heavy.to_light();
 

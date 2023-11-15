@@ -62,6 +62,8 @@ pub fn generate_light_enum(input: TokenStream) -> TokenStream {
         }
     });
 
+    let to_light_doc = format!("Get the equivalent field of the `{new_enum_name}` enum.");
+
     let generated_code = quote! {
         use light_enum::Values;
 
@@ -73,7 +75,7 @@ pub fn generate_light_enum(input: TokenStream) -> TokenStream {
         }
 
         impl #orig_enum_name {
-            /// Get the equivalent field of the [`Light`] enum
+            #[doc = #to_light_doc]
             #visibility fn to_light(&self) -> #new_enum_name {
                 match self {
                     #(#to_light_match_lines),*
@@ -126,10 +128,12 @@ pub fn generate_values(input: TokenStream) -> TokenStream {
 
     let fields_count = fields.clone().count();
 
+    let values_doc = format!("Static array containing each field of `{enum_name}`.");
+
     let generated_code = quote! {
 
         impl #enum_name {
-            /// Static array containing each field of your enum.
+            #[doc = #values_doc]
             #visibility const VALUES: [#enum_name; #fields_count] = [
                 #(
                      #enum_name::#fields

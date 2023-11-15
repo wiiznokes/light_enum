@@ -9,6 +9,11 @@ enum MyEnum {
     C,
 }
 
+#[derive(Values)]
+enum Vals {
+    A,
+    B,
+}
 fn main() {
     let heavy = MyEnum::A(0, 0);
     let light = heavy.to_light();
